@@ -9,20 +9,21 @@ import androidx.fragment.app.DialogFragment
 
 class MyDialogFragment : DialogFragment(){
 
+    private val catNames = arrayOf("Васька", "Рыжик", "Мурзик")
+
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         return activity?.let {
             val builder = AlertDialog.Builder(it)
-            builder.setTitle("Выбор есть всегда!")
-                .setMessage("Покормите кота!")
-                .setCancelable(true)
-                //.setIcon(R.drawable.hungrycat)
-                .setPositiveButton("Вкусная пища") {dialog, id ->
-                        Toast.makeText(activity,"Вы сделали правильный выбор",Toast.LENGTH_LONG).show()
+            builder.setTitle("Выберите кота")
+                .setItems(catNames
+                ) { dialog, which ->
+                    Toast.makeText(activity, "Выбранный кот: ${catNames[which]}",
+                        Toast.LENGTH_SHORT).show()
                 }
-                .setNegativeButton("Здоровая Пища",DialogInterface.OnClickListener {dialog, id ->
-                    Toast.makeText(activity,"Возможно вы правы",Toast.LENGTH_LONG).show()
-                })
             builder.create()
         } ?: throw IllegalStateException("Activity cannot be null")
     }
+
+
+
 }
